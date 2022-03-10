@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Link } from 'react-router-dom';
+import { AppContext } from '../../App';
 import '../styles/users.css';
 
 const Users = () => {
@@ -10,38 +11,40 @@ const Users = () => {
     setIsSearch(prev => !prev)
   };
 
+  // const { user } = useContext(AppContext)
+
   return (
     <div className='body'>
-      <div class="wrapper">
-      <section class="users">
+      <div className="wrapper">
+      <section className="users">
         <header>
-          <div class="content">
-            <img src="#" alt=""/>
-            <div class="details">
+          <div className="content">
+            <img src='#' alt=""/>
+            <div className="details">
               <span>Coding Nepal</span>
               <p>Active now</p>
             </div>
           </div>
-          <Link to='/' class="logout">Logout</Link>
+          <Link to='/' className="logout">Logout</Link>
         </header>
-        <div class="search">
-          <span class="text">
+        <div className="search">
+          <span className="text">
             Select an user to start chat
           </span>
           <input className={isSearch ? 'active' : ''} type="text" placeholder="Enter name to search..."/>
-          <button className={isSearch ? 'active' : ''} onClick={searchBarToggle}><i class="fas fa-search"></i></button>
+          <button className={isSearch ? 'active' : ''} onClick={searchBarToggle}><i className="fas fa-search"></i></button>
         </div>
-        <div class="users-list">
+        <div className="users-list">
         <Link to='/'>
-          <div class="content">
+          <div className="content">
             <img src="#" alt=""/>
-            <div class="details">
+            <div className="details">
               <span>Coding Nepal</span>
               <p>Active now</p>
             </div>
           </div>
-          <div class="status-dot">
-            <i class="fas fa-circle"></i>
+          <div className="status-dot">
+            <i className="fas fa-circle"></i>
           </div>
         </Link>
         </div>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import '../styles/chat.css';
 
 const Chat = () => {
+
   return (
     <div className='body'>
       <div className="wrapper">

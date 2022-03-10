@@ -1,17 +1,17 @@
-import React, { useRef, useState } from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import '../styles/account.css';
+import { AppContext } from '../../App';
 
 const Signin = () => {
 
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
-
-  const [ users, setUsers ] = useState([]);
-  const [ userEmail, setUserEmail ] = useState('');
-  const [ userPassword, setUserPassword ] = useState('')
-
+  const { 
+    emailRef, 
+    passwordRef, 
+    setUserEmail, 
+    setUserPassword, 
+    submitSignin 
+  } = useContext(AppContext);
   
     const onChangeEmail = (e) => {
       setUserEmail(e.target.value);
@@ -20,41 +20,6 @@ const Signin = () => {
     const onChangePassword = (e) => {
       setUserPassword(e.target.value);
     }
-
-    const submitSignin = (e) => {
-      e.preventDefault();
-
-      axios.get('http://localhost:4000/signin')
-      .then(response => {
-        setUsers(response.data)
-      })
-      .catch(error => {
-        console.log(error)
-      })
-
-      users.map(user => {
-        if(user.email === userEmail){
-          if(user.password === userPassword){
-            alert("You are successfully logged in.")
-            setTimeout(() => {
-              window.location.href = '/users'
-            }, 1000);
-          }else{
-            alert("Your password was wrong.")
-            emailRef('')
-            passwordRef('')
-          }
-        }else{
-          alert("Your email account doesn't have any account.")
-          emailRef('');
-          passwordRef('');
-        }
-        return user
-      })
-
-      
-    };
-
 
   return (
     <div className='body'>
