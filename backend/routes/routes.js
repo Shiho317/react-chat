@@ -19,4 +19,14 @@ router.post('/signup', (request, response) => {
   })
 })
 
+router.get('/signin', (request, response) => {
+  signupTemplateCopy.find((error, data) => {
+    if(error){
+      return response.json(error)
+    }else{
+      return response.json(data)
+    }
+  })
+})
+
 module.exports = router;
