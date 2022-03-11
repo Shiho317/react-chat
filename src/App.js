@@ -8,7 +8,7 @@ import './App.css';
 import Signin from './Components/signin/Signin';
 import Signup from './Components/signup/Signup';
 import Chat from './Components/chat/Chat';
-import Users from './Components/users/Users';
+import GetUserChat from './Components/users/[id]';
 
 export const AppContext = createContext(null);
 
@@ -18,22 +18,18 @@ function App() {
   const passwordRef = useRef(null);
 
   const [ users, setUsers ] = useState([]);
-  const [ user, setUser ] = useState();
   const [ userEmail, setUserEmail ] = useState('');
   const [ userPassword, setUserPassword ] = useState('')
+  const [ userId, setUserId ] = useState('');
+  
 
   const submitSignin = (e) => {
-    e.preventDefault();
-      console.log(users)
 
-      const user = users.map(user => {
-        return user.password
-      });
-      console.log(user)
+    e.preventDefault();
 
       const findUser = users.find(user => user.email === userEmail);
 
-      console.log(findUser)
+      let slug;
 
       if(findUser === 'undefined'){
         alert("Your email account doesn't have any account.")
@@ -42,18 +38,21 @@ function App() {
       }else{
         if(findUser.password === userPassword){
           alert("You are successfully logged in.")
-          setUser(findUser);
-          // setTimeout(() => {
-          //   window.location.href = '/users'
-          // }, 1000);
+          slug = findUser._id;
+          setUserId(slug);
+          console.log(slug)
+          setTimeout(() => {
+            window.location.href = `/users/${slug}`
+          }, 1000);
         }else{
           alert("Your password was wrong.")
           passwordRef.current.value = '';
         }
       };
+      console.log(slug)
   }
 
-  console.log(user);
+  console.log(userId)
 
   return (
     <div>
@@ -68,13 +67,12 @@ function App() {
           userPassword, 
           setUserPassword, 
           submitSignin,
-          user
         }}>
         <Router>
           <Routes>
             <Route path='/' element={<Signin/>}/>
             <Route path='/signup' element={<Signup/>}/>
-            <Route path='/users' element={<Users/>}/>
+            <Route path={"/users/:userId"} element={<GetUserChat/>}/>
             <Route path='/chat' element={<Chat/>}/>
           </Routes>
         </Router>

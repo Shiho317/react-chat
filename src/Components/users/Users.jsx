@@ -1,9 +1,8 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
-import { AppContext } from '../../App';
 import '../styles/users.css';
 
-const Users = () => {
+const Users = ({user}) => {
 
   const [ isSearch, setIsSearch ] = useState(false);
 
@@ -11,9 +10,9 @@ const Users = () => {
     setIsSearch(prev => !prev)
   };
 
-  const { user, users } = useContext(AppContext)
   console.log(user)
-  console.log(users)
+  console.log(user.image)
+
 
   return (
     <div className='body'>
@@ -23,7 +22,7 @@ const Users = () => {
           <div className="content">
             <img src={user.image} alt=""/>
             <div className="details">
-              <span>Coding Nepal</span>
+              <span>{user.firstName} {user.lastName}</span>
               <p>Active now</p>
             </div>
           </div>
