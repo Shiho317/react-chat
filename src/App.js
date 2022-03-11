@@ -4,7 +4,6 @@ import {
   Routes,
   Route,
 } from 'react-router-dom';
-import axios from 'axios';
 import './App.css';
 import Signin from './Components/signin/Signin';
 import Signup from './Components/signup/Signup';
@@ -25,20 +24,25 @@ function App() {
 
   const submitSignin = (e) => {
     e.preventDefault();
+      console.log(users)
 
-    axios.get('http://localhost:4000/signin')
-    .then(response => {
-      setUsers(response.data)
-    })
-    .catch(error => {
-      console.log(error)
-    })
+      const user = users.map(user => {
+        return user.password
+      });
+      console.log(user)
 
-    users.map(user => {
-      if(user.email === userEmail){
-        if(user.password === userPassword){
+      const findUser = users.find(user => user.email === userEmail);
+
+      console.log(findUser)
+
+      if(findUser === 'undefined'){
+        alert("Your email account doesn't have any account.")
+        emailRef.current.value = '';
+        passwordRef.current.value = '';
+      }else{
+        if(findUser.password === userPassword){
           alert("You are successfully logged in.")
-          setUser(user);
+          setUser(findUser);
           // setTimeout(() => {
           //   window.location.href = '/users'
           // }, 1000);
@@ -46,14 +50,8 @@ function App() {
           alert("Your password was wrong.")
           passwordRef.current.value = '';
         }
-      }else{
-        alert("Your email account doesn't have any account.")
-        emailRef.current.value = '';
-        passwordRef.current.value = '';
-      }
-      return user
-    })
-  };
+      };
+  }
 
   console.log(user);
 

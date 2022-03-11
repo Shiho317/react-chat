@@ -1,6 +1,7 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import '../styles/account.css';
+import axios from 'axios';
 import { AppContext } from '../../App';
 
 const Signin = () => {
@@ -10,7 +11,8 @@ const Signin = () => {
     passwordRef, 
     setUserEmail, 
     setUserPassword, 
-    submitSignin 
+    submitSignin,
+    setUsers 
   } = useContext(AppContext);
   
     const onChangeEmail = (e) => {
@@ -20,6 +22,16 @@ const Signin = () => {
     const onChangePassword = (e) => {
       setUserPassword(e.target.value);
     }
+
+  useEffect(() => {
+    axios.get('http://localhost:4000/signin')
+    .then(response => {
+      setUsers(response.data)
+    })
+    .catch(error => {
+      console.log(error)
+    })
+  },[setUsers])
 
   return (
     <div className='body'>

@@ -28,7 +28,7 @@ const Signup = () => {
   };
 
   const updateImage = (e) => {
-    setIsImage(e.target.value)
+    setIsImage(e.target.files[0].name)
   };
 
   const submitSignup = (e) => {
@@ -110,7 +110,6 @@ const Signup = () => {
                   type="file" 
                   name="image" 
                   required 
-                  value={isImage}
                   onChange={(e) => updateImage(e)}/>
               </div>
               <div className="field button">

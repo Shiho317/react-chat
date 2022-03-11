@@ -11,7 +11,9 @@ const Users = () => {
     setIsSearch(prev => !prev)
   };
 
-  // const { user } = useContext(AppContext)
+  const { user, users } = useContext(AppContext)
+  console.log(user)
+  console.log(users)
 
   return (
     <div className='body'>
@@ -19,7 +21,7 @@ const Users = () => {
       <section className="users">
         <header>
           <div className="content">
-            <img src='#' alt=""/>
+            <img src={user.image} alt=""/>
             <div className="details">
               <span>Coding Nepal</span>
               <p>Active now</p>
