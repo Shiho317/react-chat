@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import FileBase64 from 'react-file-base64';
 import '../styles/account.css';
 
 const Signup = () => {
@@ -9,7 +10,7 @@ const Signup = () => {
   const [ isLastName, setIsLastName ] = useState('');
   const [ isEmail, setIsEmail ] = useState('');
   const [ isPassword, setIsPassword ] = useState('');
-  const [ isImage, setIsImage ] = useState('');
+  const [ isImage, setIsImage ] = useState(null);
 
   const updateFName = (e) => {
     setIsFirstName(e.target.value)
@@ -25,10 +26,6 @@ const Signup = () => {
 
   const updatePassword = (e) => {
     setIsPassword(e.target.value)
-  };
-
-  const updateImage = (e) => {
-    setIsImage(e.target.files[0].name)
   };
 
   const submitSignup = (e) => {
@@ -106,11 +103,11 @@ const Signup = () => {
               </div>
               <div className="field image">
                 <label htmlFor="">Select Image</label>
-                <input
-                  type="file" 
-                  name="image" 
-                  required 
-                  onChange={(e) => updateImage(e)}/>
+                  <FileBase64
+                    type="file"
+                    multiple={false}
+                    onDone={({ base64 }) => setIsImage(base64)}
+                  />
               </div>
               <div className="field button">
                 <input type="submit" value="Continue to Chat"/>
