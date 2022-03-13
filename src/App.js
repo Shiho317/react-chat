@@ -9,6 +9,13 @@ import Signin from './Components/signin/Signin';
 import Signup from './Components/signup/Signup';
 import Chat from './Components/chat/Chat';
 import GetUserChat from './Components/users/[id]';
+import AuthRoute from './Components/AuthRoute';
+import { initializeApp } from "firebase/app";
+import { firebaseConfig } from './firebase';
+import { getFirestore, collection, addDoc } from 'firebase/firestore';
+
+export const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 export const AppContext = createContext(null);
 
@@ -21,9 +28,8 @@ function App() {
   const [ userEmail, setUserEmail ] = useState('');
   const [ userPassword, setUserPassword ] = useState('')
   const [ userId, setUserId ] = useState('');
-  
 
-  const submitSignin = (e) => {
+  const submitSignin = async(e) => {
 
     e.preventDefault();
 
@@ -37,10 +43,18 @@ function App() {
         passwordRef.current.value = '';
       }else{
         if(findUser.password === userPassword){
+
           alert("You are successfully logged in.")
           slug = findUser._id;
           setUserId(slug);
-          console.log(slug)
+          console.log(slug);
+
+          const docRef = await addDoc(collection(db, "active"), {
+            email: userEmail,
+            password: userPassword
+          });
+          console.log("Document written with ID: ", docRef.id);
+
           setTimeout(() => {
             window.location.href = `/users/${slug}`
           }, 1000);
@@ -53,6 +67,10 @@ function App() {
   }
 
   console.log(userId)
+
+  const removeFromFirestore = async() => {
+
+  };
 
   return (
     <div>
@@ -67,13 +85,14 @@ function App() {
           userPassword, 
           setUserPassword, 
           submitSignin,
+          removeFromFirestore
         }}>
         <Router>
           <Routes>
             <Route path='/' element={<Signin/>}/>
             <Route path='/signup' element={<Signup/>}/>
             <Route path={"/users/:userId"} element={<GetUserChat/>}/>
-            <Route path='/chat' element={<Chat/>}/>
+            <Route path='/chat' element={<AuthRoute><Chat/></AuthRoute>}/>
           </Routes>
         </Router>
       </AppContext.Provider>

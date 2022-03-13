@@ -25,7 +25,7 @@ const Signup = () => {
   };
 
   const updatePassword = (e) => {
-    setIsPassword(e.target.value)
+      setIsPassword(e.target.value)
   };
 
   const submitSignup = (e) => {
@@ -40,7 +40,13 @@ const Signup = () => {
     }
 
     axios.post('http://localhost:4000/signup', registered)
-      .then(response => console.log(response.data));
+      .then(response => {
+        console.log(response.data);
+        alert('Your successfully signed up.');
+        setTimeout(() => {
+          window.location.href = '/'
+        }, 1000);
+      });
 
     setIsFirstName('');
     setIsLastName('');
@@ -91,7 +97,7 @@ const Signup = () => {
                   onChange={(e) => updateEmail(e)}/>
               </div>
               <div className="field input">
-                <label htmlFor="">Password</label>
+                <label htmlFor="">Password(should be at least 6 characters)</label>
                 <input
                   type="password" 
                   name="password" 
