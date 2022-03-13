@@ -1,3 +1,4 @@
+import { getAuth, signOut } from 'firebase/auth';
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import '../styles/users.css';
@@ -13,6 +14,21 @@ const Users = ({user}) => {
   console.log(user)
   console.log(user.image)
 
+  const auth = getAuth();
+
+  const userLoggedOut = async() => {
+    signOut(auth).then(() => {
+      alert('Your account is logged out successfully.')
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      if(errorCode){
+        alert(errorMessage)
+      }
+    })
+  }
+
 
   return (
     <div className='body'>
@@ -26,7 +42,7 @@ const Users = ({user}) => {
               <p>Active now</p>
             </div>
           </div>
-          <Link to='/' className="logout">Logout</Link>
+          <Link to='/' className="logout" onClick={() => userLoggedOut()}>Logout</Link>
         </header>
         <div className="search">
           <span className="text">
@@ -36,7 +52,7 @@ const Users = ({user}) => {
           <button className={isSearch ? 'active' : ''} onClick={searchBarToggle}><i className="fas fa-search"></i></button>
         </div>
         <div className="users-list">
-        <Link to='/'>
+        <Link to='/chat'>
           <div className="content">
             <img src="#" alt=""/>
             <div className="details">

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import FileBase64 from 'react-file-base64';
 import '../styles/account.css';
+import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
 
 const Signup = () => {
 
@@ -43,10 +44,18 @@ const Signup = () => {
       .then(response => {
         console.log(response.data);
         alert('Your successfully signed up.');
-        setTimeout(() => {
-          window.location.href = '/'
-        }, 1000);
+        // setTimeout(() => {
+        //   window.location.href = '/'
+        // }, 1000);
       });
+
+    const auth = getAuth()
+
+    createUserWithEmailAndPassword(auth, isEmail, isPassword)
+    .then((userCredential => {
+      const user = userCredential.user;
+      console.log(user);
+    }))
 
     setIsFirstName('');
     setIsLastName('');
