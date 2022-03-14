@@ -29,7 +29,6 @@ const Users = ({user}) => {
     })
   }
 
-
   return (
     <div className='body'>
       <div className="wrapper">
@@ -52,7 +51,7 @@ const Users = ({user}) => {
           <button className={isSearch ? 'active' : ''} onClick={searchBarToggle}><i className="fas fa-search"></i></button>
         </div>
         <div className="users-list">
-        <Link to='/chat'>
+        <Link to={`/chat/${user._id}`}>
           <div className="content">
             <img src="#" alt=""/>
             <div className="details">

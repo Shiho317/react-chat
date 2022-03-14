@@ -12,7 +12,7 @@ import GetUserChat from './Components/users/[id]';
 import AuthRoute from './Components/AuthRoute';
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from './firebase';
-import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import { getFirestore } from 'firebase/firestore';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 export const app = initializeApp(firebaseConfig);
@@ -70,17 +70,6 @@ function App() {
   }
 
   console.log(userId)
-  // const auth = getAuth();
-
-  // const addToFirestore = async() => {
-  //   console.log(userUid)
-  //   console.log(auth)
-  //   const docRef = await addDoc(collection(db, 'chat'), {
-  //           message: '',
-  //           timeStamp: new Date(),
-  //   });
-  //         console.log("Document written with ID: ", docRef.id);
-  // }
 
   const removeFromFirestore = async() => {
 
@@ -100,13 +89,14 @@ function App() {
           setUserPassword, 
           submitSignin,
           removeFromFirestore,
+          userId
         }}>
         <Router>
           <Routes>
             <Route path='/' element={<Signin/>}/>
             <Route path='/signup' element={<Signup/>}/>
             <Route path={"/users/:userId"} element={<AuthRoute><GetUserChat/></AuthRoute>}/>
-            <Route path='/chat' element={<AuthRoute><Chat/></AuthRoute>}/>
+            <Route path={"/chat/:userId"} element={<AuthRoute><Chat/></AuthRoute>}/>
           </Routes>
         </Router>
       </AppContext.Provider>

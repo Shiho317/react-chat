@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Users from './Users';
 
-const GetUserId = (name) => {
+export const GetUserId = (name) => {
   const [ users, setUsers ] = useState([]);
 
   useEffect(() => {
